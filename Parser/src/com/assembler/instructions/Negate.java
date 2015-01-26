@@ -2,16 +2,16 @@ package com.assembler.instructions;
 
 import com.assembler.Instruction;
 
+public class Negate extends Instruction {
 
-public class PushI extends Instruction {
-
-	public PushI() {
-		super("pushi", "0000");
+	public Negate() {
+		super("neg", "1000");
 	}
 
 	@Override
 	public void runProcedure(String[] s) {
-		
-	}	
-	
+		// TODO Auto-generated method stub
+
+	}
+
 }
