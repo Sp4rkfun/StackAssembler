@@ -1,10 +1,14 @@
 package com.assembler;
 
+import com.assembler.instructions.Jump;
+import com.assembler.instructions.JumpAndLink;
 import com.assembler.instructions.PushI;
 
+import static com.assembler.Assembler.*;
 public abstract class Instruction {
 	public String name;
 	public String opcode;
+	public int count;
 	public boolean hasLabel;
 	public String label;
 
@@ -15,10 +19,18 @@ public abstract class Instruction {
 	
 	public abstract void runProcedure(String[] s);
 	
+	public Instruction onParse(String[] s){
+		return this;
+	}
+	
 	public static Instruction createInst(String s){
 		switch (s) {
-		case Assembler.PUSHI:
+		case PUSHI:
 			return new PushI();
+		case J:
+			return new Jump();
+		case JAL:
+			return new JumpAndLink();
 		default:
 			return null;
 		}

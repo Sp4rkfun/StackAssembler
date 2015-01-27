@@ -2,7 +2,7 @@ package com.assembler.instructions;
 
 import com.assembler.Instruction;
 
-public class Jump extends Instruction {
+public class Jump extends JumpInst {
 
 	public Jump() {
 		super("j", "0101");

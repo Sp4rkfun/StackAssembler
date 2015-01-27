@@ -13,9 +13,9 @@ public class Main {
 			for(String line: Files.readAllLines(Paths.get("asm/test.asm"), StandardCharsets.US_ASCII)){
 				String[] in= line.split(" ");
 				Assembler.parseInstruction(in);
-				Assembler.linkLabels();
-				//System.out.println(in[0]);
 			}
+			Assembler.linkLabels();
+			Assembler.run();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
