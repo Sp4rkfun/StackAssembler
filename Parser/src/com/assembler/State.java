@@ -4,30 +4,34 @@ import java.util.ArrayList;
 
 public class State {
 	
-	public class Stack{
+	protected static ArrayList<Instruction> instructions = new ArrayList<>();
+	public static int terminate;
+	public static int current;
+	public static Stack stack = new Stack();
+	public static class Stack{
 		
 		private int pointer=0;
 		
 		public int stackPointer(){
-			return pointer+1;
+			return pointer;
 		}
 		
-		ArrayList<String> stack = new ArrayList<>(50);
-		public void push(String s){
+		public ArrayList<Integer> stack = new ArrayList<>(50);
+		public void push(Integer s){
 			stack.add(s);
 			pointer++;
 		}
 		
-		public String pop(){
-			if(pointer==0){
+		public Integer pop(){
+			pointer--;
+			if(pointer<0){
 			System.err.println("Can't Pop Off An Empty Stack, Exiting!");
 			System.exit(0);
 			}
-			String s = stack.remove(pointer);
-			pointer--;
+			Integer s = stack.remove(pointer);
 			return s;
 		}
-		public String peek(int depth){
+		public Integer peek(int depth){
 			depth=pointer-depth;
 			if(depth<0){
 				System.err.println("Can't Peek Past The Beginning Of The Stack, Exiting!");

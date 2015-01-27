@@ -9,9 +9,8 @@ public class JumpAndLink extends JumpInst {
 	}
 	
 	@Override
-	public void runProcedure(String[] s) {
-		// TODO Auto-generated method stub
-
+	public void runProcedure() {
+		super.runProcedure();
 	}
 
 }

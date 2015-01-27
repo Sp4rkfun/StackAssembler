@@ -5,17 +5,17 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import com.assembler.instructions.JumpInst;
-import com.assembler.instructions.PushI;
-
+import static com.assembler.State.*;
 public class Assembler {
 
 	public static final String ALL = "all";
+	public static final String ADD = "add";
 	public static final String J = "j";
 	public static final String JAL = "jal";
 	public static final String BEQ = "beq";
 	public static final String PUSHI = "pushi";
-	public static int terminate;
-	protected static ArrayList<Instruction> instructions = new ArrayList<>();
+	public static final String STACKSIZE = "Stacksize";
+	public static final String DUMPSTACK = "Dumpstack";
 	private static ArrayList<String> loadedInstrucitons = new ArrayList<>();
 
 	public static void parseInstruction(String[] s) {
@@ -56,6 +56,11 @@ public class Assembler {
 			loadedInstrucitons.add(PUSHI);
 			loadedInstrucitons.add(JAL);
 			loadedInstrucitons.add(J);
+			loadedInstrucitons.add(ADD);
+			
+			loadedInstrucitons.add(STACKSIZE);
+			loadedInstrucitons.add(DUMPSTACK);
+			
 		} else {
 			loadedInstrucitons.add(i);
 		}
@@ -68,7 +73,7 @@ public class Assembler {
 		for (int i = 0; i < count; i++) {
 			Instruction in = instructions.get(i);
 			in.count = i;
-			if(in instanceof JumpInst)
+			if(in instanceof JumpInst&&((JumpInst) in).needsLink)
 				links.add((JumpInst) in);
 			if(in.hasLabel){
 				if(labels.containsKey(in.label)){
@@ -92,6 +97,9 @@ public class Assembler {
 	}
 
 	public static void run() {
-		
+		while(current<terminate){
+			instructions.get(current).runProcedure();
+		}
+		System.out.println("Exiting");
 	}
 }

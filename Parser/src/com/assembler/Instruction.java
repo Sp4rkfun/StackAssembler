@@ -1,8 +1,11 @@
 package com.assembler;
 
+import com.assembler.instructions.Add;
 import com.assembler.instructions.Jump;
 import com.assembler.instructions.JumpAndLink;
 import com.assembler.instructions.PushI;
+import com.assembler.instructions.assertions.DumpStack;
+import com.assembler.instructions.assertions.StackSize;
 
 import static com.assembler.Assembler.*;
 public abstract class Instruction {
@@ -17,7 +20,9 @@ public abstract class Instruction {
 		this.opcode=opcode;
 	}
 	
-	public abstract void runProcedure(String[] s);
+	public void runProcedure(){
+		State.current++;
+	}
 	
 	public Instruction onParse(String[] s){
 		return this;
@@ -25,12 +30,18 @@ public abstract class Instruction {
 	
 	public static Instruction createInst(String s){
 		switch (s) {
+		case ADD:
+			return new Add();
 		case PUSHI:
 			return new PushI();
 		case J:
 			return new Jump();
 		case JAL:
-			return new JumpAndLink();
+			return new JumpAndLink();		
+		case STACKSIZE:
+			return new StackSize();
+		case DUMPSTACK:
+			return new DumpStack();
 		default:
 			return null;
 		}

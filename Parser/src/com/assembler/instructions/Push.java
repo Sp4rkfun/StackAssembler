@@ -1,6 +1,7 @@
 package com.assembler.instructions;
 
 import com.assembler.Instruction;
+import com.assembler.State;
 
 public class Push extends Instruction {
 
@@ -9,9 +10,12 @@ public class Push extends Instruction {
 	}
 
 	@Override
-	public void runProcedure(String[] s) {
-		// TODO Auto-generated method stub
-
+	public Instruction onParse(String[] s) {
+		return this;
+	}
+	
+	@Override
+	public void runProcedure() {
 	}
 
 }

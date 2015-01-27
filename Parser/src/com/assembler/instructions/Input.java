@@ -9,7 +9,7 @@ public class Input extends Instruction {
 	}
 
 	@Override
-	public void runProcedure(String[] s) {
+	public void runProcedure() {
 		// TODO Auto-generated method stub
 
 	}

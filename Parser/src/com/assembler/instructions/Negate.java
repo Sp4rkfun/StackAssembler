@@ -9,8 +9,7 @@ public class Negate extends Instruction {
 	}
 
 	@Override
-	public void runProcedure(String[] s) {
-		// TODO Auto-generated method stub
+	public void runProcedure() {
 
 	}
 

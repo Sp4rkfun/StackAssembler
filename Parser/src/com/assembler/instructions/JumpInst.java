@@ -4,7 +4,7 @@ import com.assembler.Instruction;
 
 public abstract class JumpInst extends Instruction {
 	public String linkLabel;
-	
+	public boolean needsLink=true;
 	public JumpInst(String name, String opcode) {
 		super(name, opcode);
 	}
