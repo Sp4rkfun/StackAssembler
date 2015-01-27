@@ -14,14 +14,28 @@ public class Assembler {
 	public static final String J = "j";
 	public static final String JAL = "jal";
 	public static final String BEQ = "beq";
+	public static final String PUSH = "push";
+	public static final String POP = "pop";
 	public static final String PUSHI = "pushi";
+	public static final String PEEK = "peek";
+	
 	public static final String STACKSIZE = "Stacksize";
 	public static final String DUMPSTACK = "Dumpstack";
 	public static final String STACKCONTAINS = "Stackcontains";
 	private static ArrayList<String> loadedInstrucitons = new ArrayList<>();
-
+	public static HashMap<String, Integer> globals = new HashMap<>();
+	public static int globalPointer = 1;
 	public static void parseInstruction(String[] s) {
-		if (!isInstruction(s[0])) {
+		if(s[0].equals(".globl")){
+			String[] dst=s[1].split("\\[");
+			dst[1]=dst[1].substring(0, dst[1].length()-1);
+			globals.put(dst[0], globalPointer);
+			globalPointer+=Integer.parseInt(dst[1]);
+			for (int i = 0; i < Integer.parseInt(dst[1]); i++) {
+				stack.push(Integer.parseInt(s[3+i]));
+			}
+		}
+	else if (!isInstruction(s[0])) {
 			if (!s[0].endsWith(":")) {
 				System.err.println("Invalid Instruction: "+Arrays.toString(s)+", Exiting!");
 				System.exit(0);
@@ -56,10 +70,13 @@ public class Assembler {
 	public static void useInstruction(final String i) {
 		if (i.equals(ALL)) {
 			loadedInstrucitons.add(PUSHI);
+			loadedInstrucitons.add(PUSH);
+			loadedInstrucitons.add(POP);
 			loadedInstrucitons.add(JAL);
 			loadedInstrucitons.add(J);
 			loadedInstrucitons.add(ADD);
 			loadedInstrucitons.add(BEQ);
+			loadedInstrucitons.add(PEEK);
 			
 			loadedInstrucitons.add(STACKSIZE);
 			loadedInstrucitons.add(DUMPSTACK);

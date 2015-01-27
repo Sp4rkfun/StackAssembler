@@ -8,6 +8,9 @@ import com.assembler.instructions.itype.Jump;
 import com.assembler.instructions.label.BranchOnEqual;
 import com.assembler.instructions.label.JumpAndLink;
 import com.assembler.instructions.label.PushI;
+import com.assembler.instructions.ptype.Peek;
+import com.assembler.instructions.ptype.Pop;
+import com.assembler.instructions.ptype.Push;
 
 import static com.assembler.Assembler.*;
 public abstract class Instruction {
@@ -36,12 +39,18 @@ public abstract class Instruction {
 			return new Add();
 		case PUSHI:
 			return new PushI();
+		case PUSH:
+			return new Push();
+		case POP:
+			return new Pop();
 		case J:
 			return new Jump();
 		case JAL:
 			return new JumpAndLink();
 		case BEQ:
-			return new BranchOnEqual();			
+			return new BranchOnEqual();		
+		case PEEK:
+			return new Peek();
 			
 			
 		case STACKSIZE:
