@@ -1,11 +1,11 @@
-package com.assembler.instructions;
+package com.assembler.instructions.ptype;
 
 import com.assembler.Instruction;
 
-public class Pop extends Instruction {
+public class Peek extends Instruction {
 
-	public Pop() {
-		super("pop", "0011");
+	public Peek() {
+		super("peek", "0100");
 	}
 
 	@Override

@@ -1,11 +1,12 @@
-package com.assembler.instructions;
+package com.assembler.instructions.label;
 
 import com.assembler.Instruction;
 
-public abstract class JumpInst extends Instruction {
+public abstract class LabelInst extends Instruction {
 	public String linkLabel;
 	public boolean needsLink=true;
-	public JumpInst(String name, String opcode) {
+	int value;
+	public LabelInst(String name, String opcode) {
 		super(name, opcode);
 	}
 	
@@ -17,6 +18,6 @@ public abstract class JumpInst extends Instruction {
 	
 	//TODO: Do address Computation
 	public void parseLabel(int location){
-		
+		value=location;
 	}
 }

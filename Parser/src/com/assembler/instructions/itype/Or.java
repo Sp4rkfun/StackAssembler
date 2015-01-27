@@ -1,11 +1,11 @@
-package com.assembler.instructions;
+package com.assembler.instructions.itype;
 
 import com.assembler.Instruction;
 
-public class Display extends Instruction {
+public class Or extends Instruction {
 
-	public Display() {
-		super("disp", "1110");
+	public Or() {
+		super("or", "1100");
 	}
 
 	@Override
@@ -15,4 +15,3 @@ public class Display extends Instruction {
 	}
 
 }
-

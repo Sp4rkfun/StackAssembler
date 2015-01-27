@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import com.assembler.instructions.JumpInst;
+import com.assembler.instructions.label.LabelInst;
+
 import static com.assembler.State.*;
 public class Assembler {
 
@@ -16,6 +17,7 @@ public class Assembler {
 	public static final String PUSHI = "pushi";
 	public static final String STACKSIZE = "Stacksize";
 	public static final String DUMPSTACK = "Dumpstack";
+	public static final String STACKCONTAINS = "Stackcontains";
 	private static ArrayList<String> loadedInstrucitons = new ArrayList<>();
 
 	public static void parseInstruction(String[] s) {
@@ -57,9 +59,11 @@ public class Assembler {
 			loadedInstrucitons.add(JAL);
 			loadedInstrucitons.add(J);
 			loadedInstrucitons.add(ADD);
+			loadedInstrucitons.add(BEQ);
 			
 			loadedInstrucitons.add(STACKSIZE);
 			loadedInstrucitons.add(DUMPSTACK);
+			loadedInstrucitons.add(STACKCONTAINS);
 			
 		} else {
 			loadedInstrucitons.add(i);
@@ -68,13 +72,13 @@ public class Assembler {
 
 	public static void linkLabels(){
 		HashMap<String, Integer> labels = new HashMap<>();
-		ArrayList<JumpInst> links = new ArrayList<>();
+		ArrayList<LabelInst> links = new ArrayList<>();
 		int count = instructions.size();
 		for (int i = 0; i < count; i++) {
 			Instruction in = instructions.get(i);
 			in.count = i;
-			if(in instanceof JumpInst&&((JumpInst) in).needsLink)
-				links.add((JumpInst) in);
+			if(in instanceof LabelInst&&((LabelInst) in).needsLink)
+				links.add((LabelInst) in);
 			if(in.hasLabel){
 				if(labels.containsKey(in.label)){
 						System.err.println("Duplicate Label, Exiting!");
@@ -85,7 +89,7 @@ public class Assembler {
 		}
 		terminate=count;
 		
-		for(JumpInst inst: links){
+		for(LabelInst inst: links){
 			if(!labels.containsKey(inst.linkLabel)){
 				System.err.println("No Label Found For: "+inst.linkLabel+", Exiting!");
 				System.exit(0);		

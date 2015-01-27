@@ -1,12 +1,14 @@
 pushi 2
 pushi 2
-pushi relPrime
-Stacksize 3
-j
+pushi 3
+pushi 4
+beq relPrime
+Stacksize 2
+jal relPrime
 pushi 2
 pushi 2
 relPrime: add
 pushi relPrime
-jal relPrime
 pushi 2
 Dumpstack
+Stackcontains 4 ? 2

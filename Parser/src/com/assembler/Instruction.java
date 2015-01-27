@@ -1,11 +1,13 @@
 package com.assembler;
 
-import com.assembler.instructions.Add;
-import com.assembler.instructions.Jump;
-import com.assembler.instructions.JumpAndLink;
-import com.assembler.instructions.PushI;
 import com.assembler.instructions.assertions.DumpStack;
+import com.assembler.instructions.assertions.StackContains;
 import com.assembler.instructions.assertions.StackSize;
+import com.assembler.instructions.itype.Add;
+import com.assembler.instructions.itype.Jump;
+import com.assembler.instructions.label.BranchOnEqual;
+import com.assembler.instructions.label.JumpAndLink;
+import com.assembler.instructions.label.PushI;
 
 import static com.assembler.Assembler.*;
 public abstract class Instruction {
@@ -37,11 +39,17 @@ public abstract class Instruction {
 		case J:
 			return new Jump();
 		case JAL:
-			return new JumpAndLink();		
+			return new JumpAndLink();
+		case BEQ:
+			return new BranchOnEqual();			
+			
+			
 		case STACKSIZE:
 			return new StackSize();
 		case DUMPSTACK:
 			return new DumpStack();
+		case STACKCONTAINS:
+			return new StackContains();
 		default:
 			return null;
 		}

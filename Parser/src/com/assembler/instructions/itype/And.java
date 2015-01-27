@@ -1,11 +1,11 @@
-package com.assembler.instructions;
+package com.assembler.instructions.itype;
 
 import com.assembler.Instruction;
 
-public class Peek extends Instruction {
+public class And extends Instruction {
 
-	public Peek() {
-		super("peek", "0100");
+	public And() {
+		super("and", "1101");
 	}
 
 	@Override

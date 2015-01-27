@@ -1,5 +1,6 @@
 package com.assembler.instructions.assertions;
 
+import com.assembler.Echo;
 import com.assembler.Instruction;
 import com.assembler.State;
 
@@ -16,10 +17,10 @@ public class StackSize extends Assertion {
 	@Override
 	public void runProcedure() {
 		if(check!=State.stack.stackPointer()){
-			System.out.println("Assertion That "+check+" Items Are In The Stack Incorrect.  Contains "+State.stack.stackPointer());
+			Echo.printD("Assertion That "+check+" Items Are In The Stack Incorrect.  Contains "+State.stack.stackPointer());
 		}
 		else
-			System.out.println("Assertion That "+check+" Items Are In The Stack Correct.");
+			Echo.printD("Assertion That "+check+" Items Are In The Stack Correct.");
 		super.runProcedure();
 	}
 }

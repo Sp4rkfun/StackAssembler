@@ -1,12 +1,11 @@
-package com.assembler.instructions;
+package com.assembler.instructions.label;
 
 import com.assembler.Echo;
 import com.assembler.Instruction;
 import com.assembler.State;
 
 
-public class PushI extends JumpInst {
-	int value;
+public class PushI extends LabelInst {
 	public PushI() {
 		super("pushi", "0000");
 	}

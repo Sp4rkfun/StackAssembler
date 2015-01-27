@@ -1,4 +1,4 @@
-package com.assembler.instructions;
+package com.assembler.instructions.itype;
 
 import com.assembler.Instruction;
 

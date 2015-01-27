@@ -1,11 +1,11 @@
-package com.assembler.instructions;
+package com.assembler.instructions.ptype;
 
 import com.assembler.Instruction;
 
-public class And extends Instruction {
+public class Pop extends Instruction {
 
-	public And() {
-		super("and", "1101");
+	public Pop() {
+		super("pop", "0011");
 	}
 
 	@Override

@@ -1,11 +1,11 @@
-package com.assembler.instructions;
+package com.assembler.instructions.io;
 
 import com.assembler.Instruction;
 
-public class Or extends Instruction {
+public class Input extends Instruction {
 
-	public Or() {
-		super("or", "1100");
+	public Input() {
+		super("inp", "1111");
 	}
 
 	@Override

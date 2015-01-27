@@ -8,6 +8,7 @@ public class State {
 	public static int terminate;
 	public static int current;
 	public static Stack stack = new Stack();
+	public static int ra;
 	public static class Stack{
 		
 		private int pointer=0;

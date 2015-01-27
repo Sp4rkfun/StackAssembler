@@ -1,4 +1,4 @@
-package com.assembler.instructions;
+package com.assembler.instructions.ptype;
 
 import com.assembler.Instruction;
 import com.assembler.State;
