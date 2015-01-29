@@ -7,7 +7,7 @@ import com.assembler.State;
 public class Add extends Instruction {
 
 	public Add() {
-		super("add", "1011");
+		super("add", "1011000000000000");
 	}
 
 	@Override

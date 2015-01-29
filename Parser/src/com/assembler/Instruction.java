@@ -16,6 +16,7 @@ import static com.assembler.Assembler.*;
 public abstract class Instruction {
 	public String name;
 	public String opcode;
+	public String machineValue;
 	public int count;
 	public boolean hasLabel;
 	public String label;
@@ -23,6 +24,7 @@ public abstract class Instruction {
 	public Instruction(String name, String opcode){
 		this.name=name;
 		this.opcode=opcode;
+		this.machineValue=opcode;
 	}
 	
 	public void runProcedure(){

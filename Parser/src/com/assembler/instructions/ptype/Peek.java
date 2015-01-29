@@ -8,7 +8,7 @@ public class Peek extends Instruction {
 	public int depth;
 	String reg;
 	public Peek() {
-		super("peek", "0100");
+		super("peek", "0100000000000000");
 	}
 	@Override
 	public Instruction onParse(String[] s) {

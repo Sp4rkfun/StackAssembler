@@ -7,7 +7,7 @@ import com.assembler.State;
 public class Jump extends Instruction {
 
 	public Jump() {
-		super("j", "0101");
+		super("j", "0101000000000000");
 	}
 	
 	@Override

@@ -51,6 +51,29 @@ public class State {
 			return 0;
 		}
 	}
+	public static String regNum(String reg){
+		switch (reg) {
+		case "$ra":
+			return "000";
+		case "$a0":
+			return "001";
+		case "$a1":
+			return "010";
+		case "$a2":
+			return "011";
+		case "$v0":
+			return "100";
+		case "$f0":
+			return "101";
+		case "$f1":
+			return "110";
+		case "$at":
+			return "111";
+		default:
+			return "";
+		}
+	}
+	
 	public static class Stack{
 		
 		private int pointer=0;

@@ -1,5 +1,6 @@
 package com.assembler.instructions.label;
 
+import com.assembler.Assembler;
 import com.assembler.Echo;
 import com.assembler.Instruction;
 import com.assembler.State;
@@ -23,11 +24,13 @@ public class PushI extends LabelInst {
 		}
 		needsLink=false;
 		value=Integer.parseInt(s[0]);
+		machineValue+=Assembler.toBinary(Integer.parseInt(s[0]),12);
 		return this;
 	}
 	@Override
 	public void parseLabel(int location) {
 		value=location;
+		machineValue+=Assembler.toBinary(location, 12);
 	}
 
 	

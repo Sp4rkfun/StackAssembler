@@ -13,6 +13,7 @@ public class Push extends Instruction {
 	@Override
 	public Instruction onParse(String[] s) {
 		reg=s[0];
+		machineValue+=State.regNum(s[0])+"000000000";
 		return this;
 	}
 	
