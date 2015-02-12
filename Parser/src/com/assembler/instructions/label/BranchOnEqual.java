@@ -16,7 +16,7 @@ public class BranchOnEqual extends LabelInst {
 		int b = stack.pop();
 		if(a==b){
 			current=value;
-			Echo.printD(a+"=="+b+"Jumping To Instruction Number: "+current);
+			Echo.printD(a+"=="+b+" Jumping To Instruction Number: "+current);
 		}
 		else {
 			Echo.printD(a+"!="+b);

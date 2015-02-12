@@ -1,11 +1,10 @@
 package com.assembler.instructions.label;
 
+import static com.assembler.State.current;
+import static com.assembler.State.ra;
+
 import com.assembler.Assembler;
 import com.assembler.Echo;
-import com.assembler.Instruction;
-import com.assembler.State;
-
-import static com.assembler.State.*;
 
 public class JumpAndLink extends LabelInst {
 
@@ -19,7 +18,7 @@ public class JumpAndLink extends LabelInst {
 	}
 	@Override
 	public void runProcedure() {
-		ra=count;
+		ra=count+1;
 		current=value;
 		Echo.printV("Jumping To Instruction Number: "+current);
 	}

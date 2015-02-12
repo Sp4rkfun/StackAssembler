@@ -13,13 +13,13 @@ public class DumpStack extends Assertion {
 	public void runProcedure() {
 		Echo.printD("Displaying Stack Contents:");
 		Echo.printD("Globals");
-		for (int i = 0; i < Assembler.globalPointer-1; i++) {
+		for (int i = 0; i < Assembler.globalPointer; i++) {
 			Echo.printD(i+"  "+State.stack.stack.get(i));
 		}
 		Echo.printD("///////////");
 		Echo.printD("User Stack");
-		for (int i = Assembler.globalPointer-1; i < State.stack.stackPointer(); i++) {
-			Echo.printD(i-Assembler.globalPointer+1+"  "+State.stack.stack.get(i));
+		for (int i = Assembler.globalPointer; i < State.stack.stackPointer(); i++) {
+			Echo.printD(i-Assembler.globalPointer+"  "+State.stack.stack.get(i));
 		}
 		super.runProcedure();
 	}

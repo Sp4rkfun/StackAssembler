@@ -11,6 +11,8 @@ public class Main {
 		Assembler.useInstruction(Assembler.ALL);
 		try {
 			for(String line: Files.readAllLines(Paths.get("asm/test.asm"), StandardCharsets.US_ASCII)){
+				line=line.trim();
+				if(line.equals(""))continue;
 				String[] in= line.split(" ");
 				Assembler.parseInstruction(in);
 			}

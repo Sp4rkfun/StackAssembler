@@ -17,8 +17,8 @@ public class StackSize extends Assertion {
 	}
 	@Override
 	public void runProcedure() {
-		if(check!=State.stack.stackPointer()-Assembler.globalPointer+1){
-			Echo.printD("Assertion That "+check+" Items Are In The Stack Incorrect.  Contains "+(State.stack.stackPointer()-Assembler.globalPointer+1));
+		if(check!=State.stack.stackPointer()-Assembler.globalPointer){
+			Echo.printD("Assertion That "+check+" Items Are In The Stack Incorrect.  Contains "+(State.stack.stackPointer()-Assembler.globalPointer));
 		}
 		else
 			Echo.printD("Assertion That "+check+" Items Are In The Stack Correct.");

@@ -1,37 +1,56 @@
-.globl test[4] = 1 12 16 24
-.globl size[1] = 4
-pushi 2
-pushi 2
-pushi 3
-pushi 4
-beq relPrime
-Stacksize 2
-jal relPrime
-pushi 2
-pushi 2
-relPrime: add
-pushi relPrime
-pushi 2
-Dumpstack
-Stackcontains 4 ? 2
-peek $f0 test[1]
-pushi 1
-pop $f1
-peek $f0 test[$f1]
-peek $f1 size[0]
-push $f1
-pushi 0
-loop: beq done
-push $v0
-peek $v0 test[$a0]
-push $v0
-add
-pop $v0
-push $f1
-push $a0
-pushi 1
-add
-peek $a0 0
-pushi loop
-j
-done: push $v0
+pushi 10
+			jal relPrime
+
+relPrime: pushi 2
+
+loop2: push $ra
+			peek $a0 2
+			peek $a1 1
+			jal GCD
+			pop $ra
+			pushi 1
+			push $v0
+			beq return
+			pushi 1
+			add
+			j loop2
+
+GCD: push $a0
+			pushi 0
+			beq returnb
+
+loop: push $a1
+			pushi 0
+			beq returna
+			push $a0
+		push $a1
+			slt
+			pushi 1
+			beq changeA
+
+			push $a1
+			push $a0
+			neg
+			add
+			pop $a1
+			j loop
+
+
+changeA: push $a0
+			push $a1
+			neg
+			add
+			pop $a0
+			j loop
+
+
+returnb: push $a1
+			pop $v0
+			jr $ra
+
+
+returna: push $a0
+			pop $v0
+			jr $ra
+
+return: pop $v0

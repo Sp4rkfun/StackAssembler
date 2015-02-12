@@ -1,4 +1,4 @@
-package com.assembler.instructions.itype;
+ package com.assembler.instructions.itype;
 
 import com.assembler.Echo;
 import com.assembler.Instruction;
@@ -12,12 +12,12 @@ public class SetLessThan extends Instruction {
 
 	@Override
 	public void runProcedure() {
-		int a = State.stack.pop();
 		int b = State.stack.pop();
+		int a = State.stack.pop();
 		int value=0;
-		if(a<b)value=1;
+		if(b<a)value=1;
 		State.stack.push(value);
-		Echo.print("Performing Slt On Stack: "+a+"<"+b+"="+value);
+		Echo.print("Performing Slt On Stack: "+b+"<"+a+"="+value);
 		super.runProcedure();
 	}
 

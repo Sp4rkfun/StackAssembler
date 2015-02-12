@@ -1,13 +1,16 @@
 package com.assembler;
 
+import static com.assembler.State.current;
+import static com.assembler.State.instructions;
+import static com.assembler.State.stack;
+import static com.assembler.State.terminate;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
 import com.assembler.instructions.label.LabelInst;
-
-import static com.assembler.State.*;
 public class Assembler {
 
 	public static final String ALL = "all";
@@ -25,12 +28,14 @@ public class Assembler {
 	public static final String PUSHI = "pushi";
 	public static final String PEEK = "peek";
 	
+	public static final String JR = "jr";
+	
 	public static final String STACKSIZE = "Stacksize";
 	public static final String DUMPSTACK = "Dumpstack";
 	public static final String STACKCONTAINS = "Stackcontains";
 	private static ArrayList<String> loadedInstrucitons = new ArrayList<>();
 	public static HashMap<String, Integer> globals = new HashMap<>();
-	public static int globalPointer = 1;
+	public static int globalPointer = 0;
 	public static boolean toMachine=false;
 	
 	public static void parseInstruction(String[] s) {
@@ -98,6 +103,7 @@ public class Assembler {
 			loadedInstrucitons.add(ADD);
 			loadedInstrucitons.add(BEQ);
 			loadedInstrucitons.add(PEEK);
+			loadedInstrucitons.add(JR);
 			if(!toMachine){
 			loadedInstrucitons.add(STACKSIZE);
 			loadedInstrucitons.add(DUMPSTACK);
@@ -140,12 +146,12 @@ public class Assembler {
 	}
 
 	public static void run() {
- 
+		State.stack.pointer=globalPointer;
 		if(toMachine){
 			try {
 				PrintWriter writer = new PrintWriter("asm/out.mc","UTF-8");
 				for (int i = 0; i < terminate; i++) {
-					writer.println(instructions.get(i).machineValue);
+					writer.println(toHex(instructions.get(i).machineValue));
 				}
 				writer.close();
 			} catch (Exception e) {
@@ -155,6 +161,12 @@ public class Assembler {
 		}
 		else
 		while(current<terminate){
+			/*try {
+		        System.in.read();
+		    } catch (IOException e) {
+		        // TODO Auto-generated catch block
+		        e.printStackTrace();
+		    }*/
 			instructions.get(current).runProcedure();
 		}
 		System.out.println("Exiting");
@@ -175,4 +187,61 @@ public class Assembler {
 		}
 	       return binary;
 	   }
+	 public static String toHex(String binary){
+		 String s="";
+		 for (int i = 0; i < binary.length(); i+=4) {
+			
+			switch (binary.substring(i, i+4)) {
+			case "0000":
+				s+=0;
+				break;
+			case "0001":
+				s+=1;
+				break;
+			case "0010":
+				s+=2;
+				break;
+			case "0011":
+				s+=3;
+				break;
+			case "0100":
+				s+=4;
+				break;
+			case "0101":
+				s+=5;
+				break;
+			case "0110":
+				s+=6;
+				break;
+			case "0111":
+				s+=7;
+				break;
+			case "1000":
+				s+=8;
+				break;
+			case "1001":
+				s+=9;
+				break;
+			case "1010":
+				s+="a";
+				break;
+			case "1011":
+				s+="b";
+				break;
+			case "1100":
+				s+="c";
+				break;
+			case "1101":
+				s+="d";
+				break;
+			case "1110":
+				s+="e";
+				break;
+			case "1111":
+				s+="f";
+				break;
+			}
+		}
+		 return s;
+	 }
 }

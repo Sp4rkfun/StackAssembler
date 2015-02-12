@@ -22,13 +22,13 @@ public class StackContains extends Assertion {
 	@Override
 	public void runProcedure() {
 		super.runProcedure();
-		if(size!=State.stack.stackPointer()-Assembler.globalPointer+1){
-			Echo.printD("Size Mismatch.  Expected: "+size+" Actual: "+(State.stack.stackPointer()-Assembler.globalPointer+1));
+		if(size!=State.stack.stackPointer()-Assembler.globalPointer){
+			Echo.printD("Size Mismatch.  Expected: "+size+" Actual: "+(State.stack.stackPointer()-Assembler.globalPointer));
 		}
 		else{
 			for(int i=Assembler.globalPointer-1; i<size; i++){
 				if(s[i].equals("?")) continue;
-				if(Integer.parseInt(s[-Assembler.globalPointer-1+i])!=State.stack.stack.get(i)){
+				if(Integer.parseInt(s[-Assembler.globalPointer+i])!=State.stack.stack.get(i)){
 				Echo.printD("Content Mismatch On Element "+i+".  Expected: "+s[i]+" Actual: " + State.stack.stack.get(i));
 				return;
 				}
