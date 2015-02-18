@@ -14,7 +14,7 @@ public class JumpAndLink extends LabelInst {
 	@Override
 	public void parseLabel(int location) {
 		super.parseLabel(location);
-		machineValue+=Assembler.toBinary(location, 12);
+		machineValue+=Assembler.toBinary(location*2, 12);
 	}
 	@Override
 	public void runProcedure() {

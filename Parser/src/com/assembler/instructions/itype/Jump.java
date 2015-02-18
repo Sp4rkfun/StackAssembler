@@ -25,7 +25,7 @@ public class Jump extends Instruction {
 
 	@Override
 	public void runProcedure() {
-		State.current = State.stack.pop();
+		State.current = (State.stack.pop()/2);
 		Echo.print("Jumping To Instruction Number: " + State.current);
 	}
 }

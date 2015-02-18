@@ -50,6 +50,7 @@ public class Peek extends Instruction {
 	@Override
 	public void runProcedure() {
 		int value = State.regContents(src);
+		System.out.println("peeking:"+ value +"WITH SP SIZE"+State.stack.pointer);
 		if(!global)value=State.stack.pointer-value-1;
 		value = State.stack.peek(value);
 		State.updateRegister(reg, value);

@@ -37,7 +37,7 @@ public class Assembler {
 	private static ArrayList<String> loadedInstrucitons = new ArrayList<>();
 	public static HashMap<String, Integer> globals = new HashMap<>();
 	public static int globalPointer = 0;
-	public static boolean toMachine = true;
+	public static boolean toMachine = false;
 
 	public static void parseInstruction(String[] s) {
 		if (s[0].equals(".globl")) {
@@ -132,7 +132,7 @@ public class Assembler {
 					System.err.println("Duplicate Label, Exiting!");
 					System.exit(0);
 				}
-				labels.put(in.label, i);
+				labels.put(in.label, i*2);
 			}
 		}
 		terminate = count;
