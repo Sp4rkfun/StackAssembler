@@ -1,5 +1,22 @@
 package com.assembler;
 
+import static com.assembler.Assembler.ADD;
+import static com.assembler.Assembler.AND;
+import static com.assembler.Assembler.BEQ;
+import static com.assembler.Assembler.DUMPSTACK;
+import static com.assembler.Assembler.J;
+import static com.assembler.Assembler.JAL;
+import static com.assembler.Assembler.JR;
+import static com.assembler.Assembler.NEG;
+import static com.assembler.Assembler.OR;
+import static com.assembler.Assembler.PEEK;
+import static com.assembler.Assembler.POP;
+import static com.assembler.Assembler.PUSH;
+import static com.assembler.Assembler.PUSHI;
+import static com.assembler.Assembler.SLL;
+import static com.assembler.Assembler.SLT;
+import static com.assembler.Assembler.STACKCONTAINS;
+import static com.assembler.Assembler.STACKSIZE;
 import static com.assembler.State.current;
 import static com.assembler.State.instructions;
 import static com.assembler.State.stack;
@@ -8,9 +25,29 @@ import static com.assembler.State.terminate;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
+import com.assembler.instructions.assertions.DumpStack;
+import com.assembler.instructions.assertions.StackContains;
+import com.assembler.instructions.assertions.StackSize;
+import com.assembler.instructions.io.Display;
+import com.assembler.instructions.itype.Add;
+import com.assembler.instructions.itype.And;
+import com.assembler.instructions.itype.Jump;
+import com.assembler.instructions.itype.Negate;
+import com.assembler.instructions.itype.Or;
+import com.assembler.instructions.itype.SetLessThan;
+import com.assembler.instructions.itype.ShiftLeftLogical;
+import com.assembler.instructions.label.BranchOnEqual;
+import com.assembler.instructions.label.JumpAndLink;
 import com.assembler.instructions.label.LabelInst;
+import com.assembler.instructions.label.PushI;
+import com.assembler.instructions.pseudo.JumpRegister;
+import com.assembler.instructions.ptype.Peek;
+import com.assembler.instructions.ptype.Pop;
+import com.assembler.instructions.ptype.Push;
+import com.assembler.instructions.ptype.PushUpperImmediate;
 
 public class Assembler {
 
@@ -27,6 +64,7 @@ public class Assembler {
 	public static final String PUSH = "push";
 	public static final String POP = "pop";
 	public static final String PUSHI = "pushi";
+	public static final String PUI = "pui";
 	public static final String PEEK = "peek";
 
 	public static final String JR = "jr";
@@ -76,14 +114,79 @@ public class Assembler {
 		for (int i = offset; i < s.length; i++) {
 			inst[i - offset] = s[i];
 		}
-		if (offset == 2)
-			instructions.add(Instruction.createInst(s[offset - 1])
-					.onParse(inst)
-					.flagLabel(s[0].substring(0, s[0].length() - 1)));
-		else
-			instructions.add(Instruction.createInst(s[offset - 1])
-					.onParse(inst));
 
+		String item = s[offset - 1];
+
+		ArrayList<Instruction> instToAdd = new ArrayList<Instruction>();
+		switch (item) {
+		case ADD:
+			instToAdd.add(new Add());
+			break;
+		case AND:
+			instToAdd.add(new And());
+			break;
+		case NEG:
+			instToAdd.add(new Negate());
+			break;
+		case OR:
+			instToAdd.add(new Or());
+			break;
+		case SLT:
+			instToAdd.add(new SetLessThan());
+			break;
+		case SLL:
+			instToAdd.add(new ShiftLeftLogical());
+			break;
+		case PUSHI:
+			instToAdd.add(new PushI());
+			break;
+		case PUI:
+			instToAdd.add(new PushUpperImmediate());
+			break;
+		case PUSH:
+			instToAdd.add(new Push());
+			break;
+		case POP:
+			instToAdd.add(new Pop());
+			instToAdd.add(new Display());
+			break;
+		case J:
+		case JR:
+			instToAdd.add(new Jump());
+			break;
+		case JAL:
+			instToAdd.add(new JumpAndLink());
+			instToAdd.add(new Display());
+			break;
+		case BEQ:
+			instToAdd.add(new BranchOnEqual());
+			instToAdd.add(new Display());
+			break;
+		case PEEK:
+			instToAdd.add(new Peek());
+			break;
+		case STACKSIZE:
+			instToAdd.add(new StackSize());
+			break;
+		case DUMPSTACK:
+			instToAdd.add(new DumpStack());
+			break;
+		case STACKCONTAINS:
+			instToAdd.add(new StackContains());
+			break;
+		}
+		
+		int instCount = 0;
+		for (Instruction i : instToAdd) {
+			if (offset == 2 && instCount == 0) {
+				i.onParse(inst).flagLabel(s[0].substring(0, s[0].length() - 1));
+			} else {
+				i.onParse(inst);
+			}
+			instCount++;
+		}
+		
+		instructions.addAll(instToAdd);
 	}
 
 	private static boolean isInstruction(String instruction) {
@@ -100,6 +203,7 @@ public class Assembler {
 			loadedInstrucitons.add(SLL);
 			loadedInstrucitons.add(PUSH);
 			loadedInstrucitons.add(PUSHI);
+			loadedInstrucitons.add(PUI);
 			loadedInstrucitons.add(POP);
 			loadedInstrucitons.add(JAL);
 			loadedInstrucitons.add(J);
@@ -132,7 +236,7 @@ public class Assembler {
 					System.err.println("Duplicate Label, Exiting!");
 					System.exit(0);
 				}
-				labels.put(in.label, i*2);
+				labels.put(in.label, i);
 			}
 		}
 		terminate = count;

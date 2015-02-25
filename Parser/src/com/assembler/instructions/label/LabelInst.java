@@ -18,6 +18,6 @@ public abstract class LabelInst extends Instruction {
 	
 	//TODO: Do address Computation
 	public void parseLabel(int location){
-		value=location/2;
+		value=location;
 	}
 }
