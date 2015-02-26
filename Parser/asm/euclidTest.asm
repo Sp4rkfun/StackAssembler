@@ -20,8 +20,6 @@ pushi 1
 add
 jal loop2
 
-return: pop $v0
-
 GCD: push $a0
 pushi 0
 beq returnb
@@ -56,10 +54,4 @@ returnb: push $a1
 pop $v0
 jr $ra
 
-
-
-
-
-
-
-
+return: pop $v0

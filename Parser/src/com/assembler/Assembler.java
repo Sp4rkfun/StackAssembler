@@ -75,7 +75,7 @@ public class Assembler {
 	private static ArrayList<String> loadedInstrucitons = new ArrayList<>();
 	public static HashMap<String, Integer> globals = new HashMap<>();
 	public static int globalPointer = 0;
-	public static boolean toMachine = false;
+	public static boolean toMachine = true;
 
 	public static void parseInstruction(String[] s) {
 		if (s[0].equals(".globl")) {
@@ -139,9 +139,11 @@ public class Assembler {
 			break;
 		case PUSHI:
 			instToAdd.add(new PushI());
+//			instToAdd.add(new Display());
 			break;
 		case PUI:
 			instToAdd.add(new PushUpperImmediate());
+//			instToAdd.add(new Display());
 			break;
 		case PUSH:
 			instToAdd.add(new Push());
@@ -153,6 +155,7 @@ public class Assembler {
 		case J:
 		case JR:
 			instToAdd.add(new Jump());
+			instToAdd.add(new Display());
 			break;
 		case JAL:
 			instToAdd.add(new JumpAndLink());
